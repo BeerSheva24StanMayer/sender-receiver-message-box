@@ -5,7 +5,7 @@ public class Receiver extends Thread{
 
     public Receiver(MessageBox messageBox) {
         this.messageBox = messageBox;
-        //FIXME update to USER thread with some logic of finishing
+       
         setDaemon(true);
     }
     

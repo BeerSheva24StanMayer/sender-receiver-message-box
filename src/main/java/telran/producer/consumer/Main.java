@@ -12,8 +12,8 @@ public class Main {
         }
         sender.start();
         sender.join();
-        //FIXME line 16 should be taken out
+      
         Thread.sleep(100);
-        //TODO stoping all receivers
+       
     }
 }
