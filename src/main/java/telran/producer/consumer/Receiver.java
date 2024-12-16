@@ -5,7 +5,6 @@ public class Receiver extends Thread{
 
     public Receiver(MessageBox messageBox) {
         this.messageBox = messageBox;
-        //FIXME update to USER thread with some logic of finishing
         setDaemon(true);
     }
     
@@ -17,9 +16,10 @@ public class Receiver extends Thread{
         while(true) {
             try {
                 String message = messageBox.take();
+                if(message == null) break;
                 System.out.printf("Thread: %s, message: %s\n", getName(), message);
             } catch (InterruptedException e) {
-                
+                break;
             }
         }
     }
