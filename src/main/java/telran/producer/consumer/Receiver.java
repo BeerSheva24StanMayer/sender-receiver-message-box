@@ -1,27 +1,37 @@
 package telran.producer.consumer;
 
-public class Receiver extends Thread{
-    private MessageBox messageBox;
 
-    public Receiver(MessageBox messageBox) {
-        this.messageBox = messageBox;
-       
+public class Receiver extends Thread {
+    private MessageBox messageBoxOdd;
+    private MessageBox messageBoxEven;
+
+    public Receiver(MessageBox messageBoxOdd, MessageBox messageBoxEven) {
+        this.messageBoxOdd = messageBoxOdd;
+        this.messageBoxEven = messageBoxEven;
+
         setDaemon(true);
     }
+
     
-    public void setMessageBox(MessageBox messageBox) {
-        this.messageBox = messageBox;
-    }
+
     @Override
-    public void run(){
-        while(true) {
+    public void run() {
+        String message;
+        while (true) {
             try {
-                String message = messageBox.take();
-                System.out.printf("Thread: %s, message: %s\n", getName(), message);
+                if (!isThreadEven(getName()) ) {
+                    message = messageBoxEven.take();
+                } else {
+                    message = messageBoxOdd.take();
+                }
             } catch (InterruptedException e) {
-                
+                break;
             }
         }
+    }
+
+    private boolean isThreadEven(String threadName) {
+        return Integer.parseInt(threadName.replaceAll("\\D+", "")) % 2 == 0;
     }
 
 }

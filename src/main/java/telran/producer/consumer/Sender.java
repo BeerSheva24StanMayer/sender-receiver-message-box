@@ -1,22 +1,34 @@
 package telran.producer.consumer;
 
+import java.nio.channels.Pipe.SourceChannel;
+
 public class Sender extends Thread{
     private int nMessages;
-    private MessageBox messageBox;
-    public Sender(int nMessages, MessageBox messageBox) {
+    private MessageBox messageBoxOdd;
+    private MessageBox messageBoxEven;
+
+    public Sender(int nMessages, MessageBox messageBoxOdd, MessageBox messageBoxEven) {
         this.nMessages = nMessages;
-        this.messageBox = messageBox;
+        this.messageBoxOdd = messageBoxOdd;
+        this.messageBoxEven = messageBoxEven;
     }
     @Override
     public void run(){
         for(int i = 0; i < nMessages; i++) {
             try {
-                messageBox.put("Message" + (i +1));
+                if((i + 1) % 2 == 0) {
+                    messageBoxEven.put("Message" + (i + 1));
+                } else {
+                    messageBoxOdd.put("Message" + (i + 1));
+                }
+                
             } catch (InterruptedException e) {
                 
             }
             
     }
+    System.out.println();
+
 }
 
 }
